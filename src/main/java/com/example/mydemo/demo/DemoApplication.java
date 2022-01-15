@@ -4,6 +4,8 @@ import com.example.mydemo.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 @RequestMapping("/kafka")
-public class DemoApplication {
+public class DemoApplication extends SpringBootServletInitializer {
 /*
 	@Autowired
 	private KafkaTemplate<String, User> kafkaTemplate;
@@ -32,6 +34,11 @@ public class DemoApplication {
 		return "publish success";
 	}
 */
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+	return builder.sources(DemoApplication.class);
+}
+
 @GetMapping("/greet/{name}")
 public String greeting(@PathVariable String name) {
 	String msg = "Hello "+ name + " ! Welcome to my docker app !!!!";
